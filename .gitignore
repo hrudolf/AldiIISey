@@ -1,0 +1,25 @@
+# Node modules (always ignore)
+node_modules/
+
+# Build output
+dist/
+gen/
+
+# Logs
+*.log
+
+# Environment files (secrets)
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# SQLite local DB
+*.db
+*.sqlite
