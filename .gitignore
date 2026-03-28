@@ -10,7 +10,6 @@ gen/
 
 # Environment files (secrets)
 .env
-.env.*
 
 # OS files
 .DS_Store
