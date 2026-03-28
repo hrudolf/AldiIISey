@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 gen/
+target/
+_out/
 
 # Logs
 *.log
@@ -16,9 +18,22 @@ gen/
 Thumbs.db
 
 # IDE files
-.vscode/
 .idea/
 
 # SQLite local DB
 *.db
 *.sqlite
+
+.cdsrc-private.json
+default-*.json
+
+# MTA
+mta_archives/
+*_mta_build_tmp
+*.mtar
+
+# Other
+.DS_Store
+
+# @cap-js/cds-typer
+@cds-models
