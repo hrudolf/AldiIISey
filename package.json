@@ -23,5 +23,22 @@
   "scripts": {
     "start": "cds serve",
     "watch": "cds watch"
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "kind": "basic",
+        "users": {
+          "admin": {
+            "password": "admin",
+            "roles": ["Admin"]
+          },
+          "user": {
+            "password": "user",
+            "roles": ["authenticated-user"]
+          }
+        }
+      }
+    }
   }
 }
