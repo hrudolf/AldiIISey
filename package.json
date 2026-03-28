@@ -18,11 +18,13 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2.2.0",
-    "@cap-js/cds-types": "^0.16.0"
+    "@cap-js/cds-types": "^0.16.0",
+    "cds-plugin-ui5": "^0.13.0"
   },
   "scripts": {
     "start": "cds serve",
-    "watch": "cds watch"
+    "watch": "cds watch",
+    "watch-spacefarers-view": "cds watch --open spacefarersview/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "cds": {
     "requires": {
@@ -31,14 +33,24 @@
         "users": {
           "admin": {
             "password": "admin",
-            "roles": ["Admin"]
+            "roles": [
+              "Admin"
+            ]
           },
           "user": {
             "password": "user",
-            "roles": ["authenticated-user"]
+            "roles": [
+              "authenticated-user"
+            ]
           }
         }
       }
     }
-  }
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/spacefarers-view"
+  ]
 }
