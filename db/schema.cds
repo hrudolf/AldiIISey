@@ -18,19 +18,29 @@ type ShipClass : String enum {
 }
 
 entity SpaceshipOwners : cuid, managed {
-    email     : String;
+    originPlanet    : String;
+    email           : String;
+    ownedSpaceships : Association to many Spaceships
+                          on ownedSpaceships.owner = $self;
+}
+
+entity SpacefarerLanguages : cuid {
+    employee : Association to Spacefarers;
+    language : Association to Languages;
+    level    : String; // optional (e.g. basic, fluent)
 }
 
 entity Spacefarers : SpaceshipOwners {
-    firstName : String;
-    lastName  : String;
-    languages : Composition of many Languages on languages.code;
-    origin    : Locations;
-    rank      : Ranks;
-    spaceship : Association to Spaceships;
+    firstName          : String;
+    lastName           : String;
+    languages          : Association to many SpacefarerLanguages
+                             on languages.employee = $self;
+    rank               : Ranks;
+    spaceship          : Association to Spaceships;
+    starDustCollection : Integer;
 }
 
-entity Companies : SpaceshipOwners {
+entity SpaceCompanies : SpaceshipOwners {
     legalName : String;
 }
 
@@ -39,22 +49,18 @@ type Uniform {
     color : String;
 }
 
-type Locations {
-    type: String;
-    name: String;
-}
-
 entity Spaceships : cuid, managed {
     name      : String;
     shipClass : ShipClass;
     captain   : Association to Spacefarers;
-    crew      : Association to many Spacefarers on crew.spaceship = $self;
+    crew      : Composition of many Spacefarers
+                    on crew.spaceship = $self;
     owner     : Association to SpaceshipOwners;
     uniform   : Uniform;
 }
 
 @assert.range
-type Ranks : String enum {
+type Ranks     : String enum {
     Candidate;
     Junior;
     Medior;
