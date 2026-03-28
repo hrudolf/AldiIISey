@@ -5,47 +5,47 @@ annotate service.Spacefarers with @(
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'firstName',
+                Label : '{i18n>FirstName}',
                 Value : firstName,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'lastName',
+                Label : '{i18n>LastName}',
                 Value : lastName,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'rank',
+                Label : '{i18n>Rank}',
                 Value : rank,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'starDustCollection',
+                Label : '{i18n>StarDustCollection}',
                 Value : starDustCollection,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'salary',
+                Label : '{i18n>Salary}',
                 Value : salary,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'birthDay',
+                Label : '{i18n>Birthday}',
                 Value : birthDay,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'originPlanet',
+                Label : '{i18n>OriginPlanet}',
                 Value : originPlanet,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'email',
+                Label : '{i18n>Email}',
                 Value : email,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'spaceSuitColor',
+                Label : '{i18n>SpaceSuitColor}',
                 Value : spaceSuitColor,
             },
         ],
@@ -61,28 +61,74 @@ annotate service.Spacefarers with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'firstName',
+            Label : '{i18n>FirstName}',
             Value : firstName,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'lastName',
+            Label : '{i18n>LastName}',
             Value : lastName,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'rank',
+            Label : '{i18n>Rank}',
             Value : rank,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'starDustCollection',
+            Label : '{i18n>StarDustCollection}',
             Value : starDustCollection,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'salary',
+            Label : '{i18n>Salary}',
             Value : salary,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : birthDay,
+            Label : '{i18n>Birthday}',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : createdAt,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : createdBy,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : '{i18n>ID}',
+            Label : 'ID',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : modifiedAt,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : modifiedBy,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : originPlanet,
+            Label : '{i18n>OriginPlanet}',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : spaceship_ID,
+            Label : '{i18n>Spaceship}',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : spaceSuitColor,
+            Label : '{i18n>SpaceSuitColor}',
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : email,
+            Label : '{i18n>Email}',
         },
     ],
 );
