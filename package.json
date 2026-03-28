@@ -1,0 +1,27 @@
+{
+  "name": "aldiiisey",
+  "version": "1.0.0",
+  "description": "Galactic Spacefarer Adventure takeaway exercise",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrudolf/AldiIISey.git"
+  },
+  "license": "MIT",
+  "private": true,
+  "author": "hrudolf",
+  "dependencies": {
+    "@sap/cds": "^9.8.4",
+    "express": "^5.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2.2.0",
+    "@cap-js/cds-types": "^0.16.0"
+  },
+  "scripts": {
+    "start": "cds serve",
+    "watch": "cds watch"
+  }
+}
