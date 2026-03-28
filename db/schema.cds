@@ -17,8 +17,9 @@ type ShipClass : String enum {
     Aurora;
 }
 
-entity SpaceshipOwners : cuid, managed {
-    originPlanet    : String;
+entity SpaceCompanies : cuid, managed {
+    name            : String;
+    planet          : String;
     email           : String;
     ownedSpaceships : Association to many Spaceships
                           on ownedSpaceships.owner = $self;
@@ -30,7 +31,7 @@ entity SpacefarerLanguages : cuid {
     level    : String; // optional (e.g. basic, fluent)
 }
 
-entity Spacefarers : SpaceshipOwners {
+entity Spacefarers : cuid, managed {
     firstName          : String;
     lastName           : String;
     languages          : Association to many SpacefarerLanguages
@@ -38,10 +39,10 @@ entity Spacefarers : SpaceshipOwners {
     rank               : Ranks;
     spaceship          : Association to Spaceships;
     starDustCollection : Integer;
-}
-
-entity SpaceCompanies : SpaceshipOwners {
-    legalName : String;
+    salary             : Decimal(9, 2);
+    birthDay           : Date;
+    originPlanet       : String;
+    email              : String;
 }
 
 type Uniform {
@@ -55,7 +56,7 @@ entity Spaceships : cuid, managed {
     captain   : Association to Spacefarers;
     crew      : Composition of many Spacefarers
                     on crew.spaceship = $self;
-    owner     : Association to SpaceshipOwners;
+    owner     : Association to SpaceCompanies;
     uniform   : Uniform;
 }
 

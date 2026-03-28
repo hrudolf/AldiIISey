@@ -1,17 +1,15 @@
 using { aldiiisey.db as db} from '../db/schema';
 
 service GalaxyService {
-    entity Spaceships as select from  db.Spaceships {
+    entity Spaceships as select from db.Spaceships {
         *,
         null as capacity: Integer // => should be a function of ShipClass
     }
 
-    @cds.redirection.target: true
-    entity SpaceshipOwners as projection on db.SpaceshipOwners;
     entity Spacefarers as select from db.Spacefarers {
         *,
         null as spaceSuitColor: String // TODO: fill up later in service, https://community.sap.com/t5/technology-blog-posts-by-sap/computed-field-example-in-cap/ba-p/13408603
     }
-    entity SpaceCompanies as projection on db.SpaceCompanies;
 
+    entity SpaceCompanies as projection on db.SpaceCompanies;
 }
