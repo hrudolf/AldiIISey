@@ -8,7 +8,7 @@ service GalaxyService @(requires: 'authenticated-user') {
 
     entity Spacefarers as select from db.Spacefarers {
         *,
-        null as spaceSuitColor: String // TODO: fill up later in service, https://community.sap.com/t5/technology-blog-posts-by-sap/computed-field-example-in-cap/ba-p/13408603
+        spaceship.uniform.color as spaceSuitColor: String
     }
 
     entity SpaceCompanies as projection on db.SpaceCompanies;
