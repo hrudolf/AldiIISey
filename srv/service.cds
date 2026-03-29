@@ -1,25 +1,18 @@
 using { aldiiisey.db as db} from '../db/schema';
 
 service GalaxyService @(requires: 'authenticated-user') {
-    entity Spaceships as select from db.Spaceships {
-        *,
-        null as capacity: Integer // => should be a function of ShipClass
-    }
-
-    entity Spacefarers as select from db.Spacefarers {
-        *,
-        spaceship.uniform as spaceSuitColor: String(16),
-        Spacefarers.lastName || ', ' || Spacefarers.firstName as fullName: String,
-        Spacefarers.spaceship.name || ' - ' || Spacefarers.rank.code as shipAndRank: String
-    }
-
-    entity Ranks as projection on db.Ranks;
     entity Planets as projection on db.Planets;
+    entity Ranks as projection on db.Ranks;
+    entity Spaceships as projection on db.Spaceships;
+    entity Spacefarers as projection on db.Spacefarers;
 }
 
-annotate GalaxyService.Spacefarers with @(restrict: [
+annotate GalaxyService.Spacefarers with @(
+    restrict: [
   { grant: 'READ', to: 'authenticated-user' },
   { grant: ['CREATE','UPDATE','DELETE'], to: 'Admin' },
   { grant: ['UPDATE','DELETE'], to: 'authenticated-user',
     where: 'ID = $user.spacefarer_ID' }
-]);
+    ],
+    odata.draft.enabled
+);

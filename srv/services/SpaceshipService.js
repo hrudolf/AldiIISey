@@ -16,4 +16,4 @@ async function SpaceshipsReadService(data, req) {
     }
 }
 
-module.exports = { READ: SpaceshipsReadService };
+module.exports = { AFTER_READ: SpaceshipsReadService };

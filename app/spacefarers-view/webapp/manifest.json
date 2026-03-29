@@ -131,6 +131,15 @@
                     },
                     "DataField::createdAt": {
                       "availability": "Adaptation"
+                    },
+                    "DataField::originPlanet_ID": {
+                      "availability": "Hidden"
+                    },
+                    "DataField::rank_code": {
+                      "availability": "Hidden"
+                    },
+                    "DataField::spaceship_ID": {
+                      "availability": "Hidden"
                     }
                   }
                 }

@@ -16,7 +16,7 @@ annotate service.Spacefarers with @(
             {
                 $Type : 'UI.DataField',
                 Label : '{i18n>Rank}',
-                Value : rank,
+                Value : rank.i18n,
             },
             {
                 $Type : 'UI.DataField',
@@ -47,6 +47,10 @@ annotate service.Spacefarers with @(
                 $Type : 'UI.DataField',
                 Label : '{i18n>SpaceSuitColor}',
                 Value : spaceSuitColor,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : spaceship.name,
             },
         ],
     },
@@ -142,6 +146,24 @@ annotate service.Spacefarers with @(
             Label : 'fullName',
             @UI.Hidden,
         },
+        {
+            $Type : 'UI.DataField',
+            Value : originPlanet_ID,
+            Label : 'originPlanet_ID',
+            @UI.Hidden,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : rank_code,
+            Label : 'rank_code',
+            @UI.Hidden,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : spaceship_ID,
+            Label : 'spaceship_ID',
+            @UI.Hidden,
+        },
     ],
     UI.HeaderInfo : {
         TypeName : '{i18n>Spacefarer}',
@@ -162,36 +184,6 @@ annotate service.Spacefarers with @(
         traveledDistance,
     ],
 );
-
-annotate service.Spacefarers with {
-    spaceship @Common.ValueList : {
-        $Type : 'Common.ValueListType',
-        CollectionPath : 'Spaceships',
-        Parameters : [
-            {
-                $Type : 'Common.ValueListParameterInOut',
-                LocalDataProperty : spaceship_ID,
-                ValueListProperty : 'ID',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'name',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'shipClass',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'uniform_type',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'uniform_color',
-            },
-        ],
-    }
-};
 
 annotate service.Spaceships with {
     name @(
