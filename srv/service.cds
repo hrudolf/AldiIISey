@@ -18,8 +18,8 @@ service GalaxyService @(requires: 'authenticated-user') {
 }
 
 annotate GalaxyService.Spacefarers with @(restrict: [
-  { grant: 'READ', to: 'Admin' },
+  { grant: 'READ', to: 'authenticated-user' },
   { grant: ['CREATE','UPDATE','DELETE'], to: 'Admin' },
   { grant: ['UPDATE','DELETE'], to: 'authenticated-user',
-    where: 'ID = $user.id' }
+    where: 'ID = $user.spacefarer_ID' }
 ]);

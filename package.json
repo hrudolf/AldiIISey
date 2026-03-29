@@ -41,7 +41,10 @@
             "password": "user",
             "roles": [
               "authenticated-user"
-            ]
+            ],
+            "attr": {
+              "spacefarer_ID": "31304918-7a00-46cc-bba3-b227c167ab75"
+            }
           }
         }
       }
