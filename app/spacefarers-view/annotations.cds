@@ -130,7 +130,31 @@ annotate service.Spacefarers with @(
             $Type : 'UI.DataField',
             Value : modifiedBy,
         },
+        {
+            $Type : 'UI.DataField',
+            Value : shipAndRank,
+            Label : 'shipAndRank',
+            @UI.Hidden,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : fullName,
+            Label : 'fullName',
+            @UI.Hidden,
+        },
     ],
+    UI.HeaderInfo : {
+        TypeName : '{i18n>Spacefarer}',
+        TypeNamePlural : '{i18n>Spacefarers}',
+        Title : {
+            $Type : 'UI.DataField',
+            Value : fullName,
+        },
+        Description : {
+            $Type : 'UI.DataField',
+            Value : shipAndRank,
+        },
+    },
 );
 
 annotate service.Spacefarers with {
