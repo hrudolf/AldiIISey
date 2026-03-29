@@ -15,28 +15,25 @@ annotate service.Spacefarers with @(
             },
             {
                 $Type : 'UI.DataField',
+                Value : rank_code,
                 Label : '{i18n>Rank}',
-                Value : rank.i18n,
             },
             {
                 $Type : 'UI.DataField',
                 Label : '{i18n>StarDustCollection}',
                 Value : starDustCollection,
+                @UI.Hidden,
             },
             {
                 $Type : 'UI.DataField',
                 Label : '{i18n>TraveledDistance}',
                 Value : traveledDistance,
+                @UI.Hidden,
             },
             {
                 $Type : 'UI.DataField',
                 Label : '{i18n>Birthday}',
                 Value : birthDay,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : '{i18n>OriginPlanet}',
-                Value : originPlanet.name,
             },
             {
                 $Type : 'UI.DataField',
@@ -50,7 +47,13 @@ annotate service.Spacefarers with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : spaceship.name,
+                Value : originPlanet_ID,
+                Label : '{i18n>OriginPlanet}',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : spaceship_ID,
+                Label : '{i18n>Spaceship}',
             },
         ],
     },
@@ -60,6 +63,12 @@ annotate service.Spacefarers with @(
             ID : 'GeneratedFacet1',
             Label : 'General Information',
             Target : '@UI.FieldGroup#GeneratedGroup',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : '{i18n>SystemFields}',
+            ID : 'AutoFields',
+            Target : '@UI.FieldGroup#AutoFields',
         },
     ],
     UI.LineItem : [
@@ -183,14 +192,49 @@ annotate service.Spacefarers with @(
         starDustCollection,
         originPlanet.name,
     ],
+    UI.FieldGroup #AutoFields : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : ID,
+                Label : 'ID',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : createdAt,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : createdBy,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedAt,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : modifiedBy,
+            },
+        ],
+    },
 );
 
 annotate service.Spacefarers with {
     traveledDistance @Common.Label : '{i18n>TraveledDistance}';
     starDustCollection @Common.Label : '{i18n>StarDustCollection}';
-    birthDay @Common.Label : '{i18n>Birthday}';
-    firstName @Common.Label : '{i18n>FirstName}';
-    lastName @Common.Label : '{i18n>LastName}';
+    birthDay @(
+        Common.Label : '{i18n>Birthday}',
+        Common.FieldControl : #Optional,
+    );
+    firstName @(
+        Common.Label : '{i18n>FirstName}',
+        Common.FieldControl : #Mandatory,
+    );
+    lastName @(
+        Common.Label : '{i18n>LastName}',
+        Common.FieldControl : #Mandatory,
+    );
     email @Common.Label : '{i18n>Email}';
     spaceSuitColor @(
         Common.Label : '{i18n>SpaceSuitColor}',
@@ -209,9 +253,57 @@ annotate service.Spacefarers with {
     );
     shipAndRank @UI.HiddenFilter;
     fullName @UI.HiddenFilter;
-    rank @UI.HiddenFilter;
-    spaceship @UI.HiddenFilter;
-    originPlanet @UI.HiddenFilter;
+    rank @(
+        UI.HiddenFilter,
+        Common.Text : rank.i18n,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Ranks',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : rank_code,
+                    ValueListProperty : 'code',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+    );
+    spaceship @(
+        UI.HiddenFilter,
+        Common.Text : spaceship.name,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Spaceships',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : spaceship_ID,
+                    ValueListProperty : 'ID',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+    );
+    originPlanet @(
+        UI.HiddenFilter,
+        Common.Text : originPlanet.name,
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Planets',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : originPlanet_ID,
+                    ValueListProperty : 'ID',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+    );
 }
 
 annotate service.Spaceships with {
@@ -247,6 +339,7 @@ annotate service.Ranks with {
             ],
         },
         Common.ValueListWithFixedValues : true,
+        Common.FieldControl : #Mandatory,
     )
 };
 annotate service.Planets with {
@@ -266,4 +359,20 @@ annotate service.Planets with {
         Common.ValueListWithFixedValues : true,
     )
 };
+
+annotate service.Planets with {
+    ID @Common.Text : name
+};
+
+annotate service.Spaceships with {
+    ID @(
+        Common.Text : name,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+)};
+
+annotate service.Ranks with {
+    code @(
+        Common.Text : i18n,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+)};
 

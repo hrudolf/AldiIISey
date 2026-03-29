@@ -155,7 +155,8 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Spacefarers"
+              "contextPath": "/Spacefarers",
+              "sectionLayout": "Page"
             }
           }
         }
