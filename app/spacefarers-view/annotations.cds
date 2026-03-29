@@ -81,13 +81,13 @@ annotate service.Spacefarers with @(
         },
         {
             $Type : 'UI.DataField',
-            Value : spaceship_ID,
+            Value : spaceship.name,
             Label : '{i18n>Spaceship}',
         },
         {
             $Type : 'UI.DataField',
             Label : '{i18n>Rank}',
-            Value : rank,
+            Value : rank.i18n
         },
         {
             $Type : 'UI.DataField',
@@ -155,6 +155,12 @@ annotate service.Spacefarers with @(
             Value : shipAndRank,
         },
     },
+    UI.SelectionFields : [
+        spaceship.name,
+        rank.i18n,
+        starDustCollection,
+        traveledDistance,
+    ],
 );
 
 annotate service.Spacefarers with {
@@ -185,5 +191,49 @@ annotate service.Spacefarers with {
             },
         ],
     }
+};
+
+annotate service.Spaceships with {
+    name @(
+        Common.Label : '{i18n>Spaceship}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Spaceships',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : name,
+                    ValueListProperty : 'name',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+        )
+};
+
+annotate service.Spacefarers with {
+    traveledDistance @Common.Label : '{i18n>TraveledDistance}'
+};
+
+annotate service.Spacefarers with {
+    starDustCollection @Common.Label : '{i18n>StarDustCollection}'
+};
+
+annotate service.Ranks with {
+    i18n @(
+        Common.Label : '{i18n>Rank}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Ranks',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : i18n,
+                    ValueListProperty : 'i18n',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+    )
 };
 

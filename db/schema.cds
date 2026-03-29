@@ -36,7 +36,7 @@ entity Spacefarers : cuid, managed {
     lastName           : String;
     languages          : Association to many SpacefarerLanguages
                              on languages.employee = $self;
-    rank               : Ranks;
+    rank               : Association to Ranks;
     spaceship          : Association to Spaceships;
     starDustCollection : Integer;
     traveledDistance   : Decimal(9, 2);
@@ -60,11 +60,15 @@ entity Spaceships : cuid, managed {
     uniform   : Uniform;
 }
 
-@assert.range
-type Ranks     : String enum {
-    Candidate;
-    Junior;
-    Medior;
-    Senior;
-    Captain;
+entity Ranks {
+    key code : Rank;
+        i18n : localized String;
+}
+
+type Rank : String enum {
+    captain = 'captain';
+    senior = 'senior';
+    medior = 'medior';
+    junior = 'junior';
+    candidate = 'candidate';
 }
