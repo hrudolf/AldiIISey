@@ -24,8 +24,8 @@ entity SpacefarerLanguages : cuid {
 }
 
 entity Spacefarers : cuid, managed {
-    firstName          : String;
-    lastName           : String;
+    firstName          : String(32);
+    lastName           : String(32);
     languages          : Association to many SpacefarerLanguages
                              on languages.employee = $self;
     rank               : Association to Ranks;
@@ -38,11 +38,11 @@ entity Spacefarers : cuid, managed {
 }
 
 entity Planets : cuid, managed {
-    name        : String;
+    name        : String(16);
     description : String;
 }
 
-type UniformColor : String enum {
+type UniformColor : String(16) enum {
     red;
     blue;
     green;
@@ -55,7 +55,7 @@ type UniformColor : String enum {
 }
 
 entity Spaceships : cuid, managed {
-    name            : String;
+    name            : String(32);
     shipClass       : ShipClass;
     captain         : Association to Spacefarers;
     crew            : Association to many Spacefarers
@@ -66,10 +66,10 @@ entity Spaceships : cuid, managed {
 
 entity Ranks {
     key code : Rank;
-        i18n : localized String;
+        i18n : localized String(16);
 }
 
-type Rank         : String enum {
+type Rank         : String(16) enum {
     captain = 'captain';
     senior = 'senior';
     medior = 'medior';
