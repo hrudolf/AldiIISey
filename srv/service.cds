@@ -8,14 +8,13 @@ service GalaxyService @(requires: 'authenticated-user') {
 
     entity Spacefarers as select from db.Spacefarers {
         *,
-        spaceship.uniform.color as spaceSuitColor: String,
+        spaceship.uniform as spaceSuitColor: String,
         Spacefarers.lastName || ', ' || Spacefarers.firstName as fullName: String,
         Spacefarers.spaceship.name || ' - ' || Spacefarers.rank.code as shipAndRank: String
     }
 
-    entity SpaceCompanies as projection on db.SpaceCompanies;
-
     entity Ranks as projection on db.Ranks;
+    entity Planets as projection on db.Planets;
 }
 
 annotate GalaxyService.Spacefarers with @(restrict: [

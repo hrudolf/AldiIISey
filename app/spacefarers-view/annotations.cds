@@ -36,7 +36,7 @@ annotate service.Spacefarers with @(
             {
                 $Type : 'UI.DataField',
                 Label : '{i18n>OriginPlanet}',
-                Value : originPlanet,
+                Value : originPlanet.name,
             },
             {
                 $Type : 'UI.DataField',
@@ -66,13 +66,13 @@ annotate service.Spacefarers with @(
         },
         {
             $Type : 'UI.DataField',
-            Label : '{i18n>FirstName}',
-            Value : firstName,
+            Label : '{i18n>LastName}',
+            Value : lastName,
         },
         {
             $Type : 'UI.DataField',
-            Label : '{i18n>LastName}',
-            Value : lastName,
+            Label : '{i18n>FirstName}',
+            Value : firstName,
         },
         {
             $Type : 'UI.DataField',
@@ -106,7 +106,7 @@ annotate service.Spacefarers with @(
         },
         {
             $Type : 'UI.DataField',
-            Value : originPlanet,
+            Value : originPlanet.name,
             Label : '{i18n>OriginPlanet}',
         },
         {

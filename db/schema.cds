@@ -7,7 +7,7 @@ using {
 namespace aldiiisey.db;
 
 @assert.range
-type ShipClass : String enum {
+type ShipClass    : String enum {
     Transporter;
     Corvette;
     Frigate;
@@ -15,14 +15,6 @@ type ShipClass : String enum {
     Battlecruiser;
     Battleship;
     Aurora;
-}
-
-entity SpaceCompanies : cuid, managed {
-    name            : String;
-    planet          : String;
-    email           : String;
-    ownedSpaceships : Association to many Spaceships
-                          on ownedSpaceships.owner = $self;
 }
 
 entity SpacefarerLanguages : cuid {
@@ -41,23 +33,35 @@ entity Spacefarers : cuid, managed {
     starDustCollection : Integer;
     traveledDistance   : Decimal(9, 2);
     birthDay           : Date;
-    originPlanet       : String;
-    email              : String;
+    originPlanet       : Association to Planets;
+    email              : String(50) @assert.format: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
 }
 
-type Uniform {
-    type  : String;
-    color : String;
+entity Planets : cuid, managed {
+    name        : String;
+    description : String;
+}
+
+type UniformColor : String enum {
+    red;
+    blue;
+    green;
+    yellow;
+    white;
+    black;
+    purple;
+    gray;
+    orange;
 }
 
 entity Spaceships : cuid, managed {
-    name      : String;
-    shipClass : ShipClass;
-    captain   : Association to Spacefarers;
-    crew      : Composition of many Spacefarers
-                    on crew.spaceship = $self;
-    owner     : Association to SpaceCompanies;
-    uniform   : Uniform;
+    name            : String;
+    shipClass       : ShipClass;
+    captain         : Association to Spacefarers;
+    crew            : Association to many Spacefarers
+                          on crew.spaceship = $self;
+    uniform         : UniformColor;
+    currentLocation : Association to Planets;
 }
 
 entity Ranks {
@@ -65,7 +69,7 @@ entity Ranks {
         i18n : localized String;
 }
 
-type Rank : String enum {
+type Rank         : String enum {
     captain = 'captain';
     senior = 'senior';
     medior = 'medior';
