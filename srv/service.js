@@ -1,6 +1,5 @@
 const cds = require('@sap/cds');
 const SpaceshipService = require('./services/SpaceshipService');
-const SpacefarerService = require('./services/SpacefarerService');
 
 module.exports = class GalaxyService extends cds.ApplicationService {
     init() {
@@ -40,7 +39,7 @@ module.exports = class GalaxyService extends cds.ApplicationService {
                         {
                             ref: ['uniform'],
                             expand: [
-                                {ref: ['i18n'] }
+                                { ref: ['i18n'] }
                             ]
                         }
                     ]
@@ -76,6 +75,32 @@ module.exports = class GalaxyService extends cds.ApplicationService {
         });
 
         this.after('READ', Spaceships, SpaceshipService.AFTER_READ);
+
+        this.after('CREATE', Spacefarers, async (req) => {
+
+            const { email, firstName, lastName } = req;
+
+            console.log(`New spacefarer created: ${firstName} ${lastName} (${email})`);
+
+            if (!email) return; // skip if no email
+
+            // example using nodemailer
+            const nodemailer = require('nodemailer');
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: process.env.GOOGLE_USER_EMAIL,
+                    pass: process.env.GOOGLE_APP_PASSWORD,
+                },
+            });
+
+            await transporter.sendMail({
+                from: '"Galaxy HQ" <no-reply@aldiiisey.com>',
+                to: email,
+                subject: "Welcome aboard!",
+                text: `Hello ${firstName} ${lastName}, welcome to the crew!`
+            });
+        });
 
         return super.init();
     }

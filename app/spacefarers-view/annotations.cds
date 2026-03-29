@@ -235,7 +235,10 @@ annotate service.Spacefarers with {
         Common.Label : '{i18n>LastName}',
         Common.FieldControl : #Mandatory,
     );
-    email @Common.Label : '{i18n>Email}';
+    email @(
+        Common.Label : '{i18n>Email}',
+        Common.FieldControl : #Mandatory,
+    );
     spaceSuitColor @(
         Common.Label : '{i18n>SpaceSuitColor}',
         Common.ValueList : {
@@ -250,6 +253,7 @@ annotate service.Spacefarers with {
             ],
         },
         Common.ValueListWithFixedValues : true,
+        Common.FieldControl : #ReadOnly,
     );
     shipAndRank @UI.HiddenFilter;
     fullName @UI.HiddenFilter;
@@ -269,6 +273,7 @@ annotate service.Spacefarers with {
             ],
         },
         Common.ValueListWithFixedValues : true,
+        Common.FieldControl : #Mandatory,
     );
     spaceship @(
         UI.HiddenFilter,
@@ -286,6 +291,7 @@ annotate service.Spacefarers with {
             ],
         },
         Common.ValueListWithFixedValues : true,
+        Common.FieldControl : #Mandatory,
     );
     originPlanet @(
         UI.HiddenFilter,
@@ -303,6 +309,7 @@ annotate service.Spacefarers with {
         },
         Common.ValueListWithFixedValues : true,
         Common.Text.@UI.TextArrangement : #TextOnly,
+        Common.FieldControl : #Mandatory,
     );
 }
 
