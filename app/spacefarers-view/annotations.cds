@@ -361,7 +361,10 @@ annotate service.Planets with {
 };
 
 annotate service.Planets with {
-    ID @Common.Text : name
+    ID @(
+        Common.Text : name,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+    )
 };
 
 annotate service.Spaceships with {
