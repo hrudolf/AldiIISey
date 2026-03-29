@@ -114,6 +114,20 @@
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable"
+                  },
+                  "columns": {
+                    "DataField::modifiedBy": {
+                      "availability": "Adaptation"
+                    },
+                    "DataField::modifiedAt": {
+                      "availability": "Adaptation"
+                    },
+                    "DataField::createdBy": {
+                      "availability": "Adaptation"
+                    },
+                    "DataField::createdAt": {
+                      "availability": "Adaptation"
+                    }
                   }
                 }
               },

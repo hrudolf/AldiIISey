@@ -25,8 +25,8 @@ annotate service.Spacefarers with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : '{i18n>Salary}',
-                Value : salary,
+                Label : '{i18n>TraveledDistance}',
+                Value : traveledDistance,
             },
             {
                 $Type : 'UI.DataField',
@@ -61,6 +61,11 @@ annotate service.Spacefarers with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
+            Value : '{i18n>ID}',
+            Label : 'ID',
+        },
+        {
+            $Type : 'UI.DataField',
             Label : '{i18n>FirstName}',
             Value : firstName,
         },
@@ -71,8 +76,23 @@ annotate service.Spacefarers with @(
         },
         {
             $Type : 'UI.DataField',
+            Label : '{i18n>Email}',
+            Value : email,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : spaceship_ID,
+            Label : '{i18n>Spaceship}',
+        },
+        {
+            $Type : 'UI.DataField',
             Label : '{i18n>Rank}',
             Value : rank,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : spaceSuitColor,
+            Label : '{i18n>SpaceSuitColor}',
         },
         {
             $Type : 'UI.DataField',
@@ -81,8 +101,13 @@ annotate service.Spacefarers with @(
         },
         {
             $Type : 'UI.DataField',
-            Label : '{i18n>Salary}',
-            Value : salary,
+            Label : '{i18n>TraveledDistance}',
+            Value : traveledDistance,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : originPlanet,
+            Label : '{i18n>OriginPlanet}',
         },
         {
             $Type : 'UI.DataField',
@@ -99,36 +124,11 @@ annotate service.Spacefarers with @(
         },
         {
             $Type : 'UI.DataField',
-            Value : '{i18n>ID}',
-            Label : 'ID',
-        },
-        {
-            $Type : 'UI.DataField',
             Value : modifiedAt,
         },
         {
             $Type : 'UI.DataField',
             Value : modifiedBy,
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : originPlanet,
-            Label : '{i18n>OriginPlanet}',
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : spaceship_ID,
-            Label : '{i18n>Spaceship}',
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : spaceSuitColor,
-            Label : '{i18n>SpaceSuitColor}',
-        },
-        {
-            $Type : 'UI.DataField',
-            Value : email,
-            Label : '{i18n>Email}',
         },
     ],
 );

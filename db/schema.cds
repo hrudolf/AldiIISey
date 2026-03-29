@@ -39,7 +39,7 @@ entity Spacefarers : cuid, managed {
     rank               : Ranks;
     spaceship          : Association to Spaceships;
     starDustCollection : Integer;
-    salary             : Decimal(9, 2);
+    traveledDistance   : Decimal(9, 2);
     birthDay           : Date;
     originPlanet       : String;
     email              : String;
