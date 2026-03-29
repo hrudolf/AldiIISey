@@ -181,9 +181,38 @@ annotate service.Spacefarers with @(
         spaceship.name,
         rank.i18n,
         starDustCollection,
-        traveledDistance,
+        originPlanet.name,
     ],
 );
+
+annotate service.Spacefarers with {
+    traveledDistance @Common.Label : '{i18n>TraveledDistance}';
+    starDustCollection @Common.Label : '{i18n>StarDustCollection}';
+    birthDay @Common.Label : '{i18n>Birthday}';
+    firstName @Common.Label : '{i18n>FirstName}';
+    lastName @Common.Label : '{i18n>LastName}';
+    email @Common.Label : '{i18n>Email}';
+    spaceSuitColor @(
+        Common.Label : '{i18n>SpaceSuitColor}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'UniformColors',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : spaceSuitColor,
+                    ValueListProperty : 'i18n',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+    );
+    shipAndRank @UI.HiddenFilter;
+    fullName @UI.HiddenFilter;
+    rank @UI.HiddenFilter;
+    spaceship @UI.HiddenFilter;
+    originPlanet @UI.HiddenFilter;
+}
 
 annotate service.Spaceships with {
     name @(
@@ -203,14 +232,6 @@ annotate service.Spaceships with {
         )
 };
 
-annotate service.Spacefarers with {
-    traveledDistance @Common.Label : '{i18n>TraveledDistance}'
-};
-
-annotate service.Spacefarers with {
-    starDustCollection @Common.Label : '{i18n>StarDustCollection}'
-};
-
 annotate service.Ranks with {
     i18n @(
         Common.Label : '{i18n>Rank}',
@@ -222,6 +243,23 @@ annotate service.Ranks with {
                     $Type : 'Common.ValueListParameterInOut',
                     LocalDataProperty : i18n,
                     ValueListProperty : 'i18n',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+    )
+};
+annotate service.Planets with {
+    name @(
+        Common.Label : '{i18n>OriginPlanet}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Planets',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : name,
+                    ValueListProperty : 'name',
                 },
             ],
         },

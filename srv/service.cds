@@ -5,6 +5,7 @@ service GalaxyService @(requires: 'authenticated-user') {
     entity Ranks as projection on db.Ranks;
     entity Spaceships as projection on db.Spaceships;
     entity Spacefarers as projection on db.Spacefarers;
+    entity UniformColors as projection on db.UniformColors;
 }
 
 annotate GalaxyService.Spacefarers with @(
