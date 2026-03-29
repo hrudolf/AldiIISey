@@ -1,6 +1,10 @@
 const cds = require('@sap/cds');
 const SpaceshipService = require('./services/SpaceshipService');
 
-module.exports = cds.service.impl(async function () {
-    this.on('READ', 'Spaceships', SpaceshipService.READ);
-});
+module.exports = class GalaxyService extends cds.ApplicationService { init() {
+    const { Spaceships } = cds.entities('GalaxyService');
+
+    this.after('READ', Spaceships, SpaceshipService.READ);
+
+    return super.init();
+}};

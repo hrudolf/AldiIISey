@@ -8,14 +8,12 @@ const capacities = {
     Aurora: 10000
 };
 
-async function SpaceshipsReadService(req, next) {
-    const data = await next();
-    const rows = Array.isArray(data) ? data : [data];
+async function SpaceshipsReadService(data, req) {
+    const ships = Array.isArray(data) ? data : [data];
 
-    for (const row of rows) {
-        row.capacity = capacities[row.shipClass] || 0;
+    for (const ship of ships) {
+        ship.capacity = capacities[ship.shipClass] || 0;
     }
-    return data;
 }
 
 module.exports = { READ: SpaceshipsReadService };
