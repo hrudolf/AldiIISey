@@ -1,7 +1,7 @@
 const cds = require('@sap/cds');
 
 async function SpacefarerReadRestriction(req) {
-    if ('admin' in req.user.roles) {
+    if ('Admin' in req.user.roles) {
         return;
     }
 
