@@ -61,6 +61,10 @@ annotate service.Spacefarers with @(
                 Label : '{i18n>Travel}',
                 @UI.Hidden : {$edmJson:{$If: [{$Ne: [{$Path: 'rank_code'}, 'captain']}, true, false]}}
             },
+            {
+                $Type : 'UI.DataField',
+                Value : lang_code,
+            },
         ],
     },
     UI.Facets : [
@@ -273,9 +277,7 @@ annotate service.Spacefarers with {
         },
         Common.ValueListWithFixedValues : true,
         Common.FieldControl : #ReadOnly,
-        Common.Text : spaceship.uniform_code,
-        Common.Text.@UI.TextArrangement : #TextOnly,
-    );
+        );
     shipAndRank @UI.HiddenFilter;
     fullName @UI.HiddenFilter;
     rank @(
