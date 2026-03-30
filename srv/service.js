@@ -7,23 +7,7 @@ module.exports = class GalaxyService extends cds.ApplicationService {
     init() {
         const { Spaceships, Spacefarers } = cds.entities('GalaxyService');
 
-        this.on('travel', Spacefarers, async (req) => {
-            // Travel to random distance between 1 and 1000 lightyears
-            const distance = Math.floor(Math.random() * 1000) + 1;
-            
-            // Get space dust collected on this trip (between 0 and 10 per person)
-            const starDust = Math.floor(Math.random() * 10) + 1;
-
-            const captainId = req.params[0].ID;
-
-            const captain = await SELECT.one.from('Spacefarers').where({ ID: captainId });
-
-            await UPDATE(Spacefarers)
-                .set({traveledDistance: {'+=': distance}, starDustCollection: {'+=': starDust}})
-                .where({spaceship_ID: captain.spaceship_ID})
-
-            req.notify('TRAVEL_NOTIFICATION', [distance, starDust]);
-        });
+        this.on('travel', Spacefarers, SpacefarerService.travel);
 
         this.after('READ', Spaceships, SpaceshipService.fillCapacities);
 

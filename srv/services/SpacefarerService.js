@@ -4,6 +4,24 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 
+async function travel(req) {
+    // Travel to random distance between 1 and 20000 lightyears
+    const distance = Math.floor(Math.random() * 20000) + 1;
+
+    // Get space dust collected on this trip (between 0 and 10 per person)
+    const starDust = Math.floor(Math.random() * 10) + 1;
+
+    const captainId = req.params[0].ID;
+
+    const captain = await SELECT.one.from('Spacefarers').where({ ID: captainId });
+
+    await UPDATE('Spacefarers')
+        .set({ traveledDistance: { '+=': distance }, starDustCollection: { '+=': starDust } })
+        .where({ spaceship_ID: captain.spaceship_ID })
+
+    req.notify('TRAVEL_NOTIFICATION', [distance, starDust]);
+}
+
 async function userForEmail(email) {
     const db = await cds.connect.to('db');
 
@@ -19,7 +37,7 @@ async function validateOnUpdate(req) {
 
     if (user) {
         if (req.data.ID !== user.ID) {
-            return req.error({status: 400, message: "EMAIL_ALREADY_EXISTS"});
+            return req.error({ status: 400, message: "EMAIL_ALREADY_EXISTS" });
         }
     }
 }
@@ -28,7 +46,7 @@ async function initializeFields(req) {
     const existingUser = await userForEmail(req.data.email);
 
     if (!!existingUser) {
-        return req.error({status: 400, message: "EMAIL_ALREADY_EXISTS"});
+        return req.error({ status: 400, message: "EMAIL_ALREADY_EXISTS" });
     }
 
     if (!req.data.traveledDistance) {
@@ -45,11 +63,11 @@ async function initializeFields(req) {
 async function sendWelcomeEmailOnCreate(req) {
 
     const { email, firstName, lastName, lang_code, spaceship_ID } = req;
-    
+
     const name = firstName + " " + lastName;
     const locale = lang_code ?? "en";
 
-    const {name: spaceShipName} = await SELECT.one.columns("name").from('Spaceships').where({ID: spaceship_ID});
+    const { name: spaceShipName } = await SELECT.one.columns("name").from('Spaceships').where({ ID: spaceship_ID });
 
     const subject = cds.i18n.labels.at('welcome_email_subject', locale)
     const header = cds.i18n.labels.at('welcome_email_header', locale)
@@ -73,10 +91,10 @@ async function sendWelcomeEmailOnCreate(req) {
 
     // 3. Generate HTML with localized data
     const htmlToSend = template({
-      header,
-      greeting,
-      message,
-      goodbye
+        header,
+        greeting,
+        message,
+        goodbye
     });
 
     // example using nodemailer
@@ -150,4 +168,11 @@ async function extendQueryData(req, next) {
     return next();
 }
 
-module.exports = { sendWelcomeEmailOnCreate, fillVirtualFieldsAfterRead, extendQueryData, initializeFields, validateOnUpdate };
+module.exports = {
+    sendWelcomeEmailOnCreate,
+    fillVirtualFieldsAfterRead,
+    extendQueryData,
+    initializeFields,
+    validateOnUpdate,
+    travel
+};
