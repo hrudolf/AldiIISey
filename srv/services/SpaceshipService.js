@@ -8,7 +8,7 @@ const capacities = {
     Aurora: 10000
 };
 
-async function SpaceshipsReadService(data, req) {
+async function fillShipCapacitiesAfterRead(data, req) {
     const ships = Array.isArray(data) ? data : [data];
 
     for (const ship of ships) {
@@ -16,4 +16,4 @@ async function SpaceshipsReadService(data, req) {
     }
 }
 
-module.exports = { AFTER_READ: SpaceshipsReadService };
+module.exports = { fillCapacities: fillShipCapacitiesAfterRead };
