@@ -17,6 +17,30 @@ annotate service.Spacefarers with @(
             },
             {
                 $Type : 'UI.DataField',
+                Label : '{i18n>Email}',
+                Value : email,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : '{i18n>Birthday}',
+                Value : birthDay,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : originPlanet_ID,
+                Label : '{i18n>OriginPlanet}',
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : lang_code,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : spaceship_ID,
+                Label : '{i18n>Spaceship}',
+            },
+            {
+                $Type : 'UI.DataField',
                 Value : rank_code,
                 Label : '{i18n>Rank}',
             },
@@ -32,28 +56,8 @@ annotate service.Spacefarers with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : '{i18n>Birthday}',
-                Value : birthDay,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : '{i18n>Email}',
-                Value : email,
-            },
-            {
-                $Type : 'UI.DataField',
                 Label : '{i18n>SpaceSuitColor}',
                 Value : spaceSuitColor,
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : originPlanet_ID,
-                Label : '{i18n>OriginPlanet}',
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : spaceship_ID,
-                Label : '{i18n>Spaceship}',
             },
             {
                 $Type : 'UI.DataFieldForAction',
@@ -64,10 +68,6 @@ annotate service.Spacefarers with @(
                         { $Ne: [ { $Path: 'rank_code' }, 'captain' ] },
                         { $Eq: [ { $Path: 'IsActiveEntity' }, false ] }
                     ]}, true, false]}}
-            },
-            {
-                $Type : 'UI.DataField',
-                Value : lang_code,
             },
         ],
     },
