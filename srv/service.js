@@ -22,7 +22,7 @@ module.exports = class GalaxyService extends cds.ApplicationService {
                 .set({traveledDistance: {'+=': distance}, starDustCollection: {'+=': starDust}})
                 .where({spaceship_ID: captain.spaceship_ID})
 
-            req.reply(`The crew traveled ${distance} and collected ${starDust} per person`);
+            req.notify('TRAVEL_NOTIFICATION', [distance, starDust]);
         });
 
         this.after('READ', Spaceships, SpaceshipService.fillCapacities);

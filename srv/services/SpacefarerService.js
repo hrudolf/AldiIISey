@@ -18,7 +18,7 @@ async function initializeFields(req) {
     const isEmailUnique = await validateUniqueEmail(req.data.email);
 
     if (!isEmailUnique) {
-        return req.error("EMAIL_ALREADY_EXISTS", 400);
+        return req.error({status: 400, message: "EMAIL_ALREADY_EXISTS"});
     }
 
 
