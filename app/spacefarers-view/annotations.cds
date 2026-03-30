@@ -428,6 +428,8 @@ annotate service.Spaceships with {
 annotate service.Spacefarers with {
     lang @(
         Common.Text : lang.name,
+        Common.Label : '{i18n>Language}',
+        Common.ValueListWithFixedValues : true,
         )
 };
 
