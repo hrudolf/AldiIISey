@@ -1,4 +1,31 @@
 const nodemailer = require('nodemailer');
+const cds = require('@sap/cds');
+
+async function validateUniqueEmail(email) {
+    const db = await cds.connect.to('db');
+
+    const existing = await db.run(
+        SELECT.one.from('Spacefarers').where({ email: email })
+    );
+
+    return !existing;
+}
+
+async function initializeFields(req) {
+    const isEmailUnique = await validateUniqueEmail(req.data.email);
+
+    if (!isEmailUnique) {
+        return req.error("EMAIL_ALREADY_EXISTS", 400);
+    }
+
+
+    if (!req.data.traveledDistance) {
+        req.data.traveledDistance = 0;
+    }
+    if (!req.data.starDustCollection) {
+        req.data.starDustCollection = 0;
+    }
+}
 
 async function sendWelcomeEmailOnCreate(req) {
 
@@ -71,4 +98,4 @@ async function extendQueryData(req, next) {
     return next();
 }
 
-module.exports = { sendWelcomeEmailOnCreate, fillVirtualFieldsAfterRead, extendQueryData };
+module.exports = { sendWelcomeEmailOnCreate, fillVirtualFieldsAfterRead, extendQueryData, initializeFields };
