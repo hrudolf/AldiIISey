@@ -59,7 +59,11 @@ annotate service.Spacefarers with @(
                 $Type : 'UI.DataFieldForAction',
                 Action : 'GalaxyService.travel',
                 Label : '{i18n>Travel}',
-                @UI.Hidden : {$edmJson:{$If: [{$Ne: [{$Path: 'rank_code'}, 'captain']}, true, false]}}
+                @UI.Hidden : {$edmJson:{$If: [{
+                    $Or: [
+                        { $Ne: [ { $Path: 'rank_code' }, 'captain' ] },
+                        { $Eq: [ { $Path: 'IsActiveEntity' }, false ] }
+                    ]}, true, false]}}
             },
             {
                 $Type : 'UI.DataField',
