@@ -85,7 +85,7 @@ async function sendWelcomeEmailOnCreate(req) {
     }
 
     // 2. Load and Compile the HTML Template
-    const templatePath = path.join(process.env.BASE_PATH, 'welcome_mail.html');
+    const templatePath = path.join(process.env.TEMPLATE_BASE_PATH, 'welcome_mail.html');
     const source = fs.readFileSync(templatePath, 'utf-8');
     const template = handlebars.compile(source);
 
