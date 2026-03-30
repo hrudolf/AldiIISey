@@ -35,6 +35,13 @@ async function sendWelcomeEmailOnCreate(req) {
 
     if (!email) return; // skip if no email
 
+    const sendMail = process.env.SEND_MAIL === "true";
+
+    if (!sendMail) {
+        console.log("E-mail sending disabled in .env")
+        return;
+    }
+
     // example using nodemailer
     const transporter = nodemailer.createTransport({
         service: "gmail",
