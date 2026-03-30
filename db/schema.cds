@@ -17,11 +17,6 @@ type ShipClass    : String enum {
     Aurora;
 }
 
-entity SpacefarerLanguages : cuid {
-    employee : Association to Spacefarers;
-    language : Association to Languages;
-}
-
 entity Spacefarers : cuid, managed {
     firstName              : String(32);
     lastName               : String(32);
@@ -30,6 +25,7 @@ entity Spacefarers : cuid, managed {
     starDustCollection     : Integer;
     traveledDistance       : Decimal(9, 2);
     birthDay               : Date;
+    lang                   : Association to Languages;
     originPlanet           : Association to Planets;
     email                  : String(50) @assert.format: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
     virtual spaceSuitColor : String(16);

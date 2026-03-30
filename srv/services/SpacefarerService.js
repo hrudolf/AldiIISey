@@ -25,6 +25,9 @@ async function initializeFields(req) {
     if (!req.data.starDustCollection) {
         req.data.starDustCollection = 0;
     }
+    if (!req.data.lang) {
+        req.data.lang = "en";
+    }
 }
 
 async function sendWelcomeEmailOnCreate(req) {
@@ -51,6 +54,7 @@ async function sendWelcomeEmailOnCreate(req) {
         },
     });
 
+    // TODO: Create nice email template :), i18n as well
     await transporter.sendMail({
         from: '"Galaxy HQ" <no-reply@aldiiisey.com>',
         to: email,
@@ -91,6 +95,13 @@ async function extendQueryData(req, next) {
             expand: [
                 { ref: ['code'] },
                 { ref: ['i18n'] }
+            ]
+        },
+        {
+            ref: ['lang'],
+            expand: [
+                { ref: ['code'] },
+                { ref: ['name'] }
             ]
         },
         {

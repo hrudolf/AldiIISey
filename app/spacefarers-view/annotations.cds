@@ -1,4 +1,6 @@
 using GalaxyService as service from '../../srv/service';
+using from '@sap/cds/common';
+
 annotate service.Spacefarers with @(
     UI.FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',
@@ -98,6 +100,11 @@ annotate service.Spacefarers with @(
         },
         {
             $Type : 'UI.DataField',
+            Value : lang_code,
+            Label : '{i18n>Language}',
+        },
+        {
+            $Type : 'UI.DataField',
             Value : spaceship.name,
             Label : '{i18n>Spaceship}',
         },
@@ -194,8 +201,8 @@ annotate service.Spacefarers with @(
     UI.SelectionFields : [
         spaceship.name,
         rank.i18n,
+        originPlanet_ID,
         starDustCollection,
-        originPlanet.name,
     ],
     UI.FieldGroup #AutoFields : {
         $Type : 'UI.FieldGroupType',
@@ -251,6 +258,7 @@ annotate service.Spacefarers with {
         Common.FieldControl : #Mandatory,
     );
     spaceSuitColor @(
+        UI.HiddenFilter,
         Common.Label : '{i18n>SpaceSuitColor}',
         Common.ValueList : {
             $Type : 'Common.ValueListType',
@@ -259,12 +267,14 @@ annotate service.Spacefarers with {
                 {
                     $Type : 'Common.ValueListParameterInOut',
                     LocalDataProperty : spaceSuitColor,
-                    ValueListProperty : 'i18n',
+                    ValueListProperty : spaceship.i18n,
                 },
             ],
         },
         Common.ValueListWithFixedValues : true,
         Common.FieldControl : #ReadOnly,
+        Common.Text : spaceship.uniform_code,
+        Common.Text.@UI.TextArrangement : #TextOnly,
     );
     shipAndRank @UI.HiddenFilter;
     fullName @UI.HiddenFilter;
@@ -305,7 +315,6 @@ annotate service.Spacefarers with {
         Common.FieldControl : #Mandatory,
     );
     originPlanet @(
-        UI.HiddenFilter,
         Common.Text : originPlanet.name,
         Common.ValueList : {
             $Type : 'Common.ValueListType',
@@ -321,6 +330,7 @@ annotate service.Spacefarers with {
         Common.ValueListWithFixedValues : true,
         Common.Text.@UI.TextArrangement : #TextOnly,
         Common.FieldControl : #Mandatory,
+        Common.Label : '{i18n>OriginPlanet}',
     );
 }
 
@@ -396,4 +406,28 @@ annotate service.Ranks with {
         Common.Text : i18n,
         Common.Text.@UI.TextArrangement : #TextOnly,
 )};
+annotate service.Spaceships with {
+    uniform @(
+        Common.Label : '{i18n>SpaceSuitColor}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'UniformColors',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : uniform_code,
+                    ValueListProperty : 'i18n',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+        Common.ExternalID : uniform.code,
+    )
+};
+
+annotate service.Spacefarers with {
+    lang @(
+        Common.Text : lang.name,
+        )
+};
 
