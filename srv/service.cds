@@ -4,7 +4,9 @@ service GalaxyService @(requires: 'authenticated-user') {
     entity Planets as projection on db.Planets;
     entity Ranks as projection on db.Ranks;
     entity Spaceships as projection on db.Spaceships;
-    entity Spacefarers as projection on db.Spacefarers;
+    entity Spacefarers as projection on db.Spacefarers actions {
+        @(requires: ['rank-captain', 'Admin', 'admin']) action travel();
+    };
     entity UniformColors as projection on db.UniformColors;
 }
 
@@ -18,6 +20,8 @@ annotate GalaxyService.Spacefarers with @(
         { grant: ['UPDATE'], to: 'rank-captain' },
         { grant: ['UPDATE','DELETE'], to: 'authenticated-user',
             where: 'ID = $user.spacefarer_ID' },
+        { grant: ['travel'], to: 'Admin' },
+        { grant: ['travel'], to: 'rank-captain' },
     ],
     odata.draft.enabled
 );

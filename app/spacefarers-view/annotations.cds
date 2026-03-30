@@ -22,13 +22,11 @@ annotate service.Spacefarers with @(
                 $Type : 'UI.DataField',
                 Label : '{i18n>StarDustCollection}',
                 Value : starDustCollection,
-                @UI.Hidden,
             },
             {
                 $Type : 'UI.DataField',
                 Label : '{i18n>TraveledDistance}',
                 Value : traveledDistance,
-                @UI.Hidden,
             },
             {
                 $Type : 'UI.DataField',
@@ -54,6 +52,12 @@ annotate service.Spacefarers with @(
                 $Type : 'UI.DataField',
                 Value : spaceship_ID,
                 Label : '{i18n>Spaceship}',
+            },
+            {
+                $Type : 'UI.DataFieldForAction',
+                Action : 'GalaxyService.travel',
+                Label : '{i18n>Travel}',
+                @UI.Hidden : {$edmJson:{$If: [{$Ne: [{$Path: 'rank_code'}, 'captain']}, true, false]}}
             },
         ],
     },
@@ -221,8 +225,14 @@ annotate service.Spacefarers with @(
 );
 
 annotate service.Spacefarers with {
-    traveledDistance @Common.Label : '{i18n>TraveledDistance}';
-    starDustCollection @Common.Label : '{i18n>StarDustCollection}';
+    traveledDistance @(
+        Common.Label : '{i18n>TraveledDistance}',
+        Common.FieldControl : #ReadOnly,
+    );
+    starDustCollection @(
+        Common.Label : '{i18n>StarDustCollection}',
+        Common.FieldControl : #ReadOnly,
+    );
     birthDay @(
         Common.Label : '{i18n>Birthday}',
         Common.FieldControl : #Optional,
