@@ -10,10 +10,14 @@ service GalaxyService @(requires: 'authenticated-user') {
 
 annotate GalaxyService.Spacefarers with @(
     restrict: [
-  { grant: 'READ', to: 'authenticated-user' },
-  { grant: ['CREATE','UPDATE','DELETE'], to: 'Admin' },
-  { grant: ['UPDATE','DELETE'], to: 'authenticated-user',
-    where: 'ID = $user.spacefarer_ID' }
+        { grant: 'READ', to: 'authenticated-user' },
+        { grant: ['CREATE','UPDATE','DELETE'], to: 'Admin' },
+        { grant: ['UPDATE','DELETE'], to: 'authenticated-user',
+            where: 'ID = $user.spacefarer_ID' },
+        // Captain can update their own spacefarers
+        { grant: ['UPDATE'], to: 'rank-captain' },
+        { grant: ['UPDATE','DELETE'], to: 'authenticated-user',
+            where: 'ID = $user.spacefarer_ID' },
     ],
     odata.draft.enabled
 );

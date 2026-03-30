@@ -31,24 +31,7 @@
   "cds": {
     "requires": {
       "auth": {
-        "kind": "basic",
-        "users": {
-          "admin": {
-            "password": "admin",
-            "roles": [
-              "Admin"
-            ]
-          },
-          "user": {
-            "password": "user",
-            "roles": [
-              "authenticated-user"
-            ],
-            "attr": {
-              "spacefarer_ID": "31304918-7a00-46cc-bba3-b227c167ab75"
-            }
-          }
-        }
+        "impl": "./srv/custom-auth.js"
       }
     }
   },
