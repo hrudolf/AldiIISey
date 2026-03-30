@@ -23,6 +23,9 @@ Thumbs.db
 # SQLite local DB
 *.db
 *.sqlite
+*.csv
+*.db-shm
+*.db-wal
 
 .cdsrc-private.json
 default-*.json
@@ -37,5 +40,3 @@ mta_archives/
 
 # @cap-js/cds-typer
 @cds-models
-
-*.csv
