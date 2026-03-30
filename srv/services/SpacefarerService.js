@@ -4,23 +4,32 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 
-async function validateUniqueEmail(email) {
+async function userForEmail(email) {
     const db = await cds.connect.to('db');
 
     const existing = await db.run(
         SELECT.one.from('Spacefarers').where({ email: email })
     );
 
-    return !existing;
+    return existing;
+}
+
+async function validateOnUpdate(req) {
+    const user = await userForEmail(req.data.email);
+
+    if (user) {
+        if (req.data.ID !== user.ID) {
+            return req.error({status: 400, message: "EMAIL_ALREADY_EXISTS"});
+        }
+    }
 }
 
 async function initializeFields(req) {
-    const isEmailUnique = await validateUniqueEmail(req.data.email);
+    const existingUser = await userForEmail(req.data.email);
 
-    if (!isEmailUnique) {
+    if (!!existingUser) {
         return req.error({status: 400, message: "EMAIL_ALREADY_EXISTS"});
     }
-
 
     if (!req.data.traveledDistance) {
         req.data.traveledDistance = 0;
@@ -141,4 +150,4 @@ async function extendQueryData(req, next) {
     return next();
 }
 
-module.exports = { sendWelcomeEmailOnCreate, fillVirtualFieldsAfterRead, extendQueryData, initializeFields };
+module.exports = { sendWelcomeEmailOnCreate, fillVirtualFieldsAfterRead, extendQueryData, initializeFields, validateOnUpdate };

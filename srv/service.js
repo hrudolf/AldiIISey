@@ -32,6 +32,7 @@ module.exports = class GalaxyService extends cds.ApplicationService {
         this.after('READ', Spacefarers, SpacefarerService.fillVirtualFieldsAfterRead);
 
         this.before('CREATE', Spacefarers, SpacefarerService.initializeFields);
+        this.before('UPDATE', Spacefarers, SpacefarerService.validateOnUpdate);
         this.after('CREATE', Spacefarers, SpacefarerService.sendWelcomeEmailOnCreate);
 
         return super.init();
