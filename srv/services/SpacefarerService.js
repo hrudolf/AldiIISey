@@ -25,8 +25,8 @@ async function initializeFields(req) {
     if (!req.data.starDustCollection) {
         req.data.starDustCollection = 0;
     }
-    if (!req.data.lang) {
-        req.data.lang = "en";
+    if (!req.data.lang_code) {
+        req.data.lang_code = "en"
     }
 }
 
