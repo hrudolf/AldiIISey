@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
 const cds = require('@sap/cds');
+const handlebars = require('handlebars');
+const fs = require('fs');
+const path = require('path');
 
 async function validateUniqueEmail(email) {
     const db = await cds.connect.to('db');
@@ -32,11 +35,20 @@ async function initializeFields(req) {
 
 async function sendWelcomeEmailOnCreate(req) {
 
-    const { email, firstName, lastName } = req;
+    const { email, firstName, lastName, lang_code, spaceship_ID } = req;
+    
+    const name = firstName + " " + lastName;
+    const locale = lang_code ?? "en";
 
-    console.log(`New spacefarer created: ${firstName} ${lastName} (${email})`);
+    const {name: spaceShipName} = await SELECT.one.columns("name").from('Spaceships').where({ID: spaceship_ID});
 
-    if (!email) return; // skip if no email
+    const subject = cds.i18n.labels.at('welcome_email_subject', locale)
+    const header = cds.i18n.labels.at('welcome_email_header', locale)
+    const greeting = cds.i18n.labels.at('welcome_email_greeting', locale, [name]);
+    const message = cds.i18n.labels.at('welcome_email_message', locale, [spaceShipName]);
+    const goodbye = cds.i18n.labels.at('welcome_email_goodbye', locale);
+
+    if (!email) return; // skip if no email address
 
     const sendMail = process.env.SEND_MAIL === "true";
 
@@ -44,6 +56,19 @@ async function sendWelcomeEmailOnCreate(req) {
         console.log("E-mail sending disabled in .env")
         return;
     }
+
+    // 2. Load and Compile the HTML Template
+    const templatePath = path.join(process.env.BASE_PATH, 'welcome_mail.html');
+    const source = fs.readFileSync(templatePath, 'utf-8');
+    const template = handlebars.compile(source);
+
+    // 3. Generate HTML with localized data
+    const htmlToSend = template({
+      header,
+      greeting,
+      message,
+      goodbye
+    });
 
     // example using nodemailer
     const transporter = nodemailer.createTransport({
@@ -58,8 +83,8 @@ async function sendWelcomeEmailOnCreate(req) {
     await transporter.sendMail({
         from: '"Galaxy HQ" <no-reply@aldiiisey.com>',
         to: email,
-        subject: "Welcome aboard!",
-        text: `Hello ${firstName} ${lastName}, welcome to the crew!`
+        subject: subject,
+        html: htmlToSend
     });
 };
 
