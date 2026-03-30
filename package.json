@@ -34,6 +34,12 @@
     "requires": {
       "auth": {
         "impl": "./srv/custom-auth.js"
+      },
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db/aldiiisey.db"
+        }
       }
     }
   },
