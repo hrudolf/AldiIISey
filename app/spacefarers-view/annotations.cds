@@ -189,6 +189,7 @@ annotate service.Spacefarers with @(
             $Type : 'UI.DataField',
             Value : shipAndRank,
         },
+        TypeImageUrl: {$edmJson:{$If: [{$Eq: [{$Path: 'rank_code'}, 'captain']}, 'sap-icon://badge', 'sap-icon://employee']}}
     },
     UI.SelectionFields : [
         spaceship.name,
