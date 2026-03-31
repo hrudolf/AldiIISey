@@ -34,7 +34,7 @@ async function collectStarDust(req) {
         .set({ starDustCollection: 0 })
         .where({ ID: spacefarerID });
 
-    req.notify(`${starDustCollection} stardust collected from ${lastName}, ${firstName}`)
+    req.notify('STARDUST_COLLECTED', [starDustCollection, lastName, firstName])
 }
 
 async function userForEmail(email) {
