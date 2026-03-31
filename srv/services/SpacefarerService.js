@@ -23,7 +23,6 @@ async function travel(req) {
 }
 
 async function collectStarDust(req) {
-    console.log("Collect stardust, req is ", req.params)
     const spacefarerID = req.params[0].ID;
     const { starDustCollection, firstName, lastName } = 
         await SELECT.one
