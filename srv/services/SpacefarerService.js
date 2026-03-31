@@ -23,8 +23,18 @@ async function travel(req) {
 }
 
 async function collectStarDust(req) {
-    console.log("Collect stardust, req is ", req)
+    console.log("Collect stardust, req is ", req.params)
+    const spacefarerID = req.params[0].ID;
+    const { starDustCollection, firstName, lastName } = 
+        await SELECT.one
+            .columns('starDustCollection', 'firstName', 'lastName')
+            .from('Spacefarers').where({ ID: spacefarerID });
 
+    await UPDATE('Spacefarers')
+        .set({ starDustCollection: 0 })
+        .where({ ID: spacefarerID });
+
+    req.notify(`${starDustCollection} stardust collected from ${lastName}, ${firstName}`)
 }
 
 async function userForEmail(email) {
@@ -128,7 +138,7 @@ async function fillVirtualFieldsAfterRead(rawData, req) {
         sf.fullName = `${sf.lastName}, ${sf.firstName}`;
         sf.shipAndRank = `${sf.spaceship.name || ' - '} - ${sf.rank.i18n || ' - '}`;
         sf.spaceSuitColor = sf.spaceship?.uniform?.i18n || null;
-        
+
         const isTravelerCaptain = sf.rank.code === 'captain';
         const isUserCaptainOrAdmin = ('rank-captain' in req.user.roles || 'Admin' in req.user.roles)
         sf.hideTravelAction = !(isTravelerCaptain && isUserCaptainOrAdmin);

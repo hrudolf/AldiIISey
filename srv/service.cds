@@ -7,6 +7,7 @@ service GalaxyService @(requires: 'authenticated-user') {
     entity Spacefarers as projection on db.Spacefarers actions {
         @(Common.SideEffects: {TargetProperties: ['starDustCollection', 'traveledDistance']})
         @(requires: ['rank-captain', 'Admin', 'admin']) action travel();
+        @(Common.SideEffects: {TargetProperties: ['starDustCollection']})
         @(requires: ['rank-captain', 'Admin', 'admin']) action collectStarDust();
     };
     entity UniformColors as projection on db.UniformColors;
