@@ -7,8 +7,15 @@ service GalaxyService @(requires: 'authenticated-user') {
     entity Spacefarers as projection on db.Spacefarers actions {
         @(Common.SideEffects: {TargetProperties: ['starDustCollection', 'traveledDistance']})
         @(requires: ['rank-captain', 'Admin', 'admin']) action travel();
+        @(requires: ['rank-captain', 'Admin', 'admin']) action collectStarDust();
     };
     entity UniformColors as projection on db.UniformColors;
+
+    @odata.singleton
+    entity UserContext {
+        key ID: String;
+        hideCollectAction: Boolean;
+    }
 }
 
 annotate GalaxyService.Spacefarers with @(
@@ -21,8 +28,8 @@ annotate GalaxyService.Spacefarers with @(
         { grant: ['UPDATE'], to: 'rank-captain' },
         { grant: ['UPDATE','DELETE'], to: 'authenticated-user',
             where: 'ID = $user.spacefarer_ID' },
-        { grant: ['travel'], to: 'Admin' },
-        { grant: ['travel'], to: 'rank-captain' },
+        { grant: ['travel', 'collectStarDust'], to: 'Admin' },
+        { grant: ['travel', 'collectStarDust'], to: 'rank-captain' },
     ],
     odata.draft.enabled
 );

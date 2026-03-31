@@ -8,8 +8,15 @@ module.exports = class GalaxyService extends cds.ApplicationService {
         const { Spaceships, Spacefarers } = cds.entities('GalaxyService');
 
         this.on('travel', Spacefarers, SpacefarerService.travel);
+        this.on('collectStarDust', Spacefarers, SpacefarerService.collectStarDust);
 
         this.after('READ', Spaceships, SpaceshipService.fillCapacities);
+        this.on('READ', 'UserContext', (req) => {
+            return {
+                ID: req.user.id,
+                hideCollectAction: !('rank-captain' in req.user.roles || 'Admin' in req.user.roles)
+            };
+        });
 
         this.before('READ', Spacefarers, AuthenticationService.authenticateSpacefarerRead);
         this.on('READ', Spacefarers, SpacefarerService.extendQueryData);

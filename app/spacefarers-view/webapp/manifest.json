@@ -141,6 +141,11 @@
                     "DataField::spaceship_ID": {
                       "availability": "Hidden"
                     }
+                  },
+                  "actions": {
+                    "DataFieldForAction::GalaxyService.collectStarDust": {
+                      "enableOnSelect": "multi"
+                    }
                   }
                 }
               },

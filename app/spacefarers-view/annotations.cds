@@ -63,11 +63,11 @@ annotate service.Spacefarers with @(
                 $Type : 'UI.DataFieldForAction',
                 Action : 'GalaxyService.travel',
                 Label : '{i18n>Travel}',
-                @UI.Hidden : {$edmJson:{$If: [{
+                @UI.Hidden : {$edmJson:{
                     $Or: [
-                        { $Ne: [ { $Path: 'rank_code' }, 'captain' ] },
+                        { $Eq: [ { $Path: 'hideTravelAction' }, true ] },
                         { $Eq: [ { $Path: 'IsActiveEntity' }, false ] }
-                    ]}, true, false]}}
+                    ]}}
             },
         ],
     },
@@ -191,6 +191,12 @@ annotate service.Spacefarers with @(
             Value : spaceship_ID,
             Label : 'spaceship_ID',
             @UI.Hidden,
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'GalaxyService.collectStarDust',
+            Label : '{i18n>collectStarDust}',
+            ![@UI.Hidden]: { $edmJson: { $Path: '/GalaxyService.EntityContainer/UserContext/hideCollectAction' } }
         },
     ],
     UI.HeaderInfo : {
@@ -338,6 +344,12 @@ annotate service.Spacefarers with {
         Common.FieldControl : #Mandatory,
         Common.Label : '{i18n>OriginPlanet}',
     );
+    lang @(
+        Common.Text : lang.name,
+        Common.Label : '{i18n>Language}',
+        Common.ValueListWithFixedValues : true,
+        );
+    hideTravelAction @UI.Hidden;
 }
 
 annotate service.Spaceships with {
@@ -430,12 +442,3 @@ annotate service.Spaceships with {
         Common.ExternalID : uniform.code,
     )
 };
-
-annotate service.Spacefarers with {
-    lang @(
-        Common.Text : lang.name,
-        Common.Label : '{i18n>Language}',
-        Common.ValueListWithFixedValues : true,
-        )
-};
-

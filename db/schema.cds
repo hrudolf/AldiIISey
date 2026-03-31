@@ -18,19 +18,20 @@ type ShipClass    : String enum {
 }
 
 entity Spacefarers : cuid, managed {
-    firstName              : String(32);
-    lastName               : String(32);
-    rank                   : Association to Ranks;
-    spaceship              : Association to Spaceships;
-    starDustCollection     : Integer;
-    traveledDistance       : Decimal(9, 2);
-    birthDay               : Date;
-    lang                   : Association to Languages;
-    originPlanet           : Association to Planets;
-    email                  : String(50) @assert.format: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-    virtual spaceSuitColor : String(16);
-    virtual fullName       : String;
-    virtual shipAndRank    : String;
+    firstName                 : String(32);
+    lastName                  : String(32);
+    rank                      : Association to Ranks;
+    spaceship                 : Association to Spaceships;
+    starDustCollection        : Integer;
+    traveledDistance          : Decimal(9, 2);
+    birthDay                  : Date;
+    lang                      : Association to Languages;
+    originPlanet              : Association to Planets;
+    email                     : String(50) @assert.format: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+    virtual spaceSuitColor    : String(16);
+    virtual fullName          : String;
+    virtual shipAndRank       : String;
+    virtual hideTravelAction  : Boolean;
 }
 
 entity Planets : cuid, managed {

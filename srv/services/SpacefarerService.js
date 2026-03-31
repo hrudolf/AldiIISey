@@ -22,6 +22,11 @@ async function travel(req) {
     req.notify('TRAVEL_NOTIFICATION', [distance, starDust]);
 }
 
+async function collectStarDust(req) {
+    console.log("Collect stardust, req is ", req)
+
+}
+
 async function userForEmail(email) {
     const db = await cds.connect.to('db');
 
@@ -123,6 +128,10 @@ async function fillVirtualFieldsAfterRead(rawData, req) {
         sf.fullName = `${sf.lastName}, ${sf.firstName}`;
         sf.shipAndRank = `${sf.spaceship.name || ' - '} - ${sf.rank.i18n || ' - '}`;
         sf.spaceSuitColor = sf.spaceship?.uniform?.i18n || null;
+        
+        const isTravelerCaptain = sf.rank.code === 'captain';
+        const isUserCaptainOrAdmin = ('rank-captain' in req.user.roles || 'Admin' in req.user.roles)
+        sf.hideTravelAction = !(isTravelerCaptain && isUserCaptainOrAdmin);
     }
 }
 
@@ -174,5 +183,6 @@ module.exports = {
     extendQueryData,
     initializeFields,
     validateOnUpdate,
-    travel
+    travel,
+    collectStarDust
 };
