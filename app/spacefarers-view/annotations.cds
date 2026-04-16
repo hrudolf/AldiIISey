@@ -225,10 +225,12 @@ annotate service.Spacefarers with @(
                 $Type : 'UI.DataField',
                 Value : ID,
                 Label : 'ID',
+                @UI.Hidden,
             },
             {
                 $Type : 'UI.DataField',
                 Value : createdAt,
+                @UI.Hidden,
             },
             {
                 $Type : 'UI.DataField',
