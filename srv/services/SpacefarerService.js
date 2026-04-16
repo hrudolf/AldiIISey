@@ -1,8 +1,6 @@
-const nodemailer = require('nodemailer');
 const cds = require('@sap/cds');
-const handlebars = require('handlebars');
-const fs = require('fs');
-const path = require('path');
+const { emailService } = require('./EmailService');
+const WelcomeEmailModule = require('../modules/WelcomeEmailModule');
 
 async function travel(req) {
     // Travel to random distance between 1 and 20000 lightyears
@@ -75,22 +73,6 @@ async function initializeFields(req) {
 }
 
 async function sendWelcomeEmailOnCreate(req) {
-
-    const { email, firstName, lastName, lang_code, spaceship_ID } = req;
-
-    const name = firstName + " " + lastName;
-    const locale = lang_code ?? "en";
-
-    const { name: spaceShipName } = await SELECT.one.columns("name").from('Spaceships').where({ ID: spaceship_ID });
-
-    const subject = cds.i18n.labels.at('welcome_email_subject', locale)
-    const header = cds.i18n.labels.at('welcome_email_header', locale)
-    const greeting = cds.i18n.labels.at('welcome_email_greeting', locale, [name]);
-    const message = cds.i18n.labels.at('welcome_email_message', locale, [spaceShipName]);
-    const goodbye = cds.i18n.labels.at('welcome_email_goodbye', locale);
-
-    if (!email) return; // skip if no email address
-
     const sendMail = process.env.SEND_MAIL === "true";
 
     if (!sendMail) {
@@ -98,31 +80,23 @@ async function sendWelcomeEmailOnCreate(req) {
         return;
     }
 
-    // 2. Load and Compile the HTML Template
-    const templatePath = path.join(process.env.TEMPLATE_BASE_PATH, 'welcome_mail.html');
-    const source = fs.readFileSync(templatePath, 'utf-8');
-    const template = handlebars.compile(source);
+    const { email, firstName, lastName, lang_code, spaceship_ID } = req;
 
-    // 3. Generate HTML with localized data
-    const htmlToSend = template({
-        header,
-        greeting,
-        message,
-        goodbye
-    });
+    if (!email) {
+        console.warn(`No email address set for user ${lastName}, ${firstName}`)
+        return;
+    }
 
-    // example using nodemailer
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.GOOGLE_USER_EMAIL,
-            pass: process.env.GOOGLE_APP_PASSWORD,
-        },
-    });
+    const name = `${firstName} ${lastName}`;
+    const locale = lang_code ?? "en";
 
-    // TODO: Create nice email template :), i18n as well
-    await transporter.sendMail({
-        from: '"Galaxy HQ" <no-reply@aldiiisey.com>',
+    const { name: spaceShipName } = await SELECT.one.columns("name").from('Spaceships').where({ ID: spaceship_ID });
+    const subject = cds.i18n.labels.at(WelcomeEmailModule.constants.SUBJECT_I18N, locale)
+
+    const htmlToSend = WelcomeEmailModule.createMailHtml(name, locale, spaceShipName)
+
+    await emailService.sendMail({
+        from: WelcomeEmailModule.constants.SENDER,
         to: email,
         subject: subject,
         html: htmlToSend
