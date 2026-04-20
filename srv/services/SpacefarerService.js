@@ -47,6 +47,17 @@ async function userForEmail(email) {
 async function validateOnUpdate(req) {
     const user = await userForEmail(req.data.email);
 
+    console.log("Req is: ", req)
+    console.log("User is", user)
+
+    if (user.rank_code !== req.data.rank_code) {
+        const isUserCaptainOrAdmin = ('rank-captain' in req.user.roles || 'Admin' in req.user.roles)
+        if (! isUserCaptainOrAdmin) {
+            return req.error({ status: 403, message: "CANNOT_CHANGE_RANK"})
+        }
+    }
+
+
     if (user) {
         if (req.data.ID !== user.ID) {
             return req.error({ status: 400, message: "EMAIL_ALREADY_EXISTS" });
